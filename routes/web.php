@@ -17,3 +17,4 @@ Route::get("/gender", [GenderController::class, "index"]);
 Route::get("/universes/create", [UniverseController::class, "create"]); */
 
 Route::resource('universes', UniverseController::class);
+Route::resource('Superheroes', SuperheroController::class);
