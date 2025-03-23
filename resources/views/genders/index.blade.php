@@ -4,34 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Universes</title>
+    <title>Genders</title>
 </head>
 <body>
-    <h1>Universes</h1>
+    <h1>Genders</h1>
 
-    <a href="{{ route('universe.create') }}">Create New Universe</a>
+    <a href="{{ route('gender.create') }}">Create New Gender</a>
 
     <table>
         <thead>
         <tr>
             <th>Id</th>
             <th>Name</th>
-            <th>Description</th>
             <th>Actions</th>
         </tr>
         </thead>
 
         <tbody>
-            @foreach ($universes as $universe) 
+            @foreach ($genders as $gender) 
             <tr>
-                <td>{{ $universe->id }}</td>
-                <td>{{ $universe->name }}</td>
-                <td>{{ $universe->description }}</td>
+                <td>{{ $gender->id }}</td>
+                <td>{{ $gender->name }}</td>
                 <td>
-                    <a href="{{ route('universe.show', $universe->id) }}">Show</a>
-                    <a href="{{ route('universe.edit', $universe->id) }}">Edit</a>
+                    <a href="{{ route('gender.show', $gender->id) }}">Show</a>
+                    <a href="{{ route('gender.edit', $gender->id) }}">Edit</a>
 
-                    <form action="{{ route('universe.destroy', $universe->id) }}" method="post">
+                    <form action="{{ route('gender.destroy', $gender->id) }}" method="post">
                         @csrf
                         @method('DELETE')
                         <input type="submit" value="Delete" onClick="return confirm('Are you sure?')">

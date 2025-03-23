@@ -21,7 +21,8 @@ class UniverseController extends Controller
      */
     public function create()
     {
-        return view('universes.create');
+        $universes = Universe::select('id', 'name') ->get();
+        return view('universes.create', compact('universes'));
     }
 
     /**
@@ -30,11 +31,11 @@ class UniverseController extends Controller
     public function store(Request $request)
     {
         Universe::create([
-            'Name'=> $request->name
+            'name' => $request->name,
+            'description' => $request->description,
         ]);
 
-        return to_route('universes.index');
-
+        return to_route('universe.index');
     }
 
     /**
@@ -42,7 +43,8 @@ class UniverseController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $universe = Universe::find($id);
+        return view('universes.show', compact('universe'));
     }
 
     /**
@@ -50,7 +52,8 @@ class UniverseController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $universe = Universe::find($id);
+        return view('universes.edit', compact('universe'));  
     }
 
     /**
@@ -58,7 +61,12 @@ class UniverseController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $universe = Universe::find($id);
+        $universe->update([
+            'name' => $request->name,
+            'description' => $request->description,
+        ]);
+        return to_route('universe.index');
     }
 
     /**
@@ -66,6 +74,8 @@ class UniverseController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $universe = Universe::find($id);
+        $universe->delete();
+        return to_route('universe.index');
     }
 }

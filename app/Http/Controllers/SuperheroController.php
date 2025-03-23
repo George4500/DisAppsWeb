@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Superhero;
+use App\Models\Universe;
+use App\Models\Gender;
 
 class SuperheroController extends Controller
 {
@@ -11,7 +14,8 @@ class SuperheroController extends Controller
      */
     public function index()
     {
-        //
+        $superheroes = Superhero::all();
+        return view('superheroes.index', compact('superheroes'));
     }
 
     /**
@@ -20,7 +24,8 @@ class SuperheroController extends Controller
     public function create()
     {
         $genders = Gender::select('id', 'name')->get();
-        return view('superheroes.create', compact('genders'));
+        $universes = Universe::select('id', 'name')->get();
+        return view('superheroes.create',   compact('genders', 'universes'));
     }
 
     /**
@@ -29,11 +34,11 @@ class SuperheroController extends Controller
     public function store(Request $request)
     {
         Superhero::create([
-            'gender_id' => $request ->gender_id,
-            'real_name' => $request ->real_name,
-            'universe_id' => 1,
-            'name' => 'Peter Parker',
-            'picture' => ''
+            'gender_id' => $request->gender_id,
+            'universe_id' => $request->universe_id,
+            'name' => $request->name,
+            'real_name' => $request->real_name,
+            'picture' => $request->picture,
         ]);
         return to_route('superheroes.index');
     }
@@ -44,15 +49,17 @@ class SuperheroController extends Controller
     public function show(string $id)
     {
         $superhero = Superhero::find($id);
-        dd($superhero);
-    }
+        return view('superheroes.show', compact('superhero'));}
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
-        //
+        $superhero = Superhero::find($id);
+        $genders = Gender::select('id', 'name')->get();
+        $universes = Universe::select('id', 'name')->get();
+        return view('superheroes.edit', compact('superhero', 'genders', 'universes'));
     }
 
     /**
@@ -60,7 +67,15 @@ class SuperheroController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $superhero = Superhero::find($id);
+        $superhero->update([
+            'gender_id' => $request->gender_id,
+            'universe_id' => $request->universe_id,
+            'name' => $request->name,
+            'real_name' => $request->real_name,
+            'picture' => $request->picture,
+        ]);
+        return to_route('superhero.index');
     }
 
     /**
@@ -68,6 +83,8 @@ class SuperheroController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $superhero = Superhero::find($id);
+        $superhero->delete();
+        return to_route('superhero.index');
     }
 }
