@@ -19,4 +19,9 @@ class Superhero extends Model
         'name',
         'picture',
     ];
+
+    public function universe()
+    {
+        return $this->belongsTo(Universe::class);
+    }
 }

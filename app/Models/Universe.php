@@ -11,4 +11,9 @@ class Universe extends Model
     protected $table = 'universes';
 
     protected $fillable = ['name', 'description'];
+
+    public function superheroes()
+    {
+        return $this->hasMany(Superhero::class);
+    }
 }
