@@ -8,6 +8,7 @@ use App\Http\Controllers\UniverseApiController;
 use App\Http\Controllers\UniverseController;
 use App\Http\Controllers\GenderApiController;
 use App\Http\Controllers\GenderController;
+use App\Http\Controllers\FileController;
 
 // Ruta principal
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -31,6 +32,11 @@ Route::delete('/apigenders/{name}', [GenderApiController::class, 'destroy']);
 Route::get('/apisuperheroes', [SuperheroApiController::class, 'index']);
 Route::get('/apisuperheroes/{name}', [SuperheroApiController::class, 'show']);
 Route::delete('/apisuperheroes/{id}', [SuperheroApiController::class, 'destroy']);
+
+// FileController
+Route::post('/file', [FileController::class, 'index'])->name('file.index');
+Route::post('/file/upload', [FileController::class, 'upload'])->name('file.upload');
+Route::get('/file/download/{path}', [FileController::class, 'download'])->name('file.download');
 
 // Autenticación
 require __DIR__.'/auth.php';
